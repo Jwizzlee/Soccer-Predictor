@@ -60,12 +60,23 @@ frontend/src/
 
 **Requires:** Python 3.11+, Node 20+, API-Football key, OpenAI key, Clerk app, Stripe test account.
 
+### Environment files
+
+From the repo root, copy the example env files and fill in your keys (`SPORTS_API_SEASON=2024` on the backend).
+
+```bash
+# Windows (PowerShell)
+Copy-Item backend/.env.example backend/.env
+Copy-Item frontend/.env.example frontend/.env
+
+# macOS / Linux
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
+```
+
 ### Backend
 
 ```bash
-cp backend/.env.example backend/.env
-# fill in keys — keep SPORTS_API_SEASON=2024
-
 cd backend
 python -m venv .venv
 .\.venv\Scripts\pip install -r requirements.txt          # Windows
@@ -79,8 +90,6 @@ Docs: http://localhost:8000/docs
 ### Frontend
 
 ```bash
-cp frontend/.env.example frontend/.env
-
 cd frontend
 npm install
 npm run dev
