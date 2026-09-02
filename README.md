@@ -128,5 +128,3 @@ cd backend
 ---
 
 For research and entertainment only — not betting or financial advice.
-
-Customize to however you want.
