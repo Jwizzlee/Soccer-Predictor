@@ -15,10 +15,6 @@ export function formatConfidence(value: number): string {
   return `${Math.round(value * 100)}%`;
 }
 
-export function formatConfidencePercent(value: number): string {
-  return `${Math.round(value)}%`;
-}
-
 export function recommendationColor(rec: Recommendation): string {
   return rec === "OVER" ? "text-accent-over" : "text-accent-under";
 }

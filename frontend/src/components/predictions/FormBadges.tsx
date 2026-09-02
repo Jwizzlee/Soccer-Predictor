@@ -33,9 +33,6 @@ export default function FormBadges({ values, line, lastN }: FormBadgesProps) {
           );
         })}
       </div>
-      <p className="mt-2 text-[10px] text-slate-600">
-        Green = over line · Muted = under
-      </p>
     </div>
   );
 }

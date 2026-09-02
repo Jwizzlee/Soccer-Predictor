@@ -1,5 +1,3 @@
-"""Persistent SQLite store for user prediction history."""
-
 from __future__ import annotations
 
 from dataclasses import dataclass

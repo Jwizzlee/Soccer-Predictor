@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-"""Verify Sports Predictor backend health: imports and SQLite schema."""
 
 from __future__ import annotations
 
@@ -18,7 +17,7 @@ sys.path.insert(0, str(BACKEND_ROOT))
 def verify_imports() -> None:
     from app.main import app  # noqa: F401
 
-    print("PASS: FastAPI app imports cleanly")
+    print("ok: app imports")
 
 
 async def ensure_schema() -> None:
@@ -29,7 +28,7 @@ async def ensure_schema() -> None:
     await prediction_store.connect()
     await billing_store.close()
     await prediction_store.close()
-    print("PASS: SQLite stores connect and initialize schema")
+    print("ok: stores + schema")
 
 
 def verify_tables() -> None:
@@ -49,14 +48,14 @@ def verify_tables() -> None:
             raise RuntimeError(f"Missing tables: {', '.join(missing)}")
 
         for name in REQUIRED_TABLES:
-            print(f"PASS: Table '{name}' exists")
+            print(f"ok: table {name}")
     finally:
         conn.close()
 
 
 async def main() -> int:
-    print("Sports Predictor — backend verification")
-    print("=" * 40)
+    print("Sports Predictor — verify")
+    print("-" * 28)
     try:
         verify_imports()
         await ensure_schema()
@@ -65,8 +64,8 @@ async def main() -> int:
         print(f"FAIL: {exc}")
         return 1
 
-    print("=" * 40)
-    print("All backend checks passed.")
+    print("-" * 28)
+    print("done.")
     return 0
 
 

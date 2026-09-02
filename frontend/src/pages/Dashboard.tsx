@@ -144,9 +144,7 @@ export default function Dashboard() {
       };
       setSelected(fallback);
       setSearch(item.player_name);
-      setPickLoadError(
-        "Loaded saved prop settings. Player details may be limited — re-run analyze to refresh."
-      );
+      setPickLoadError("Saved settings loaded — run analyze again for fresh data.");
     }
 
     propAnalysisRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });

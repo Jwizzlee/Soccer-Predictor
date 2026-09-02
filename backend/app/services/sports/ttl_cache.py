@@ -1,4 +1,4 @@
-"""In-memory TTL cache for API-Football responses (process-local, no Redis)."""
+"""In-memory TTL cache for API-Football (process-local)."""
 
 from __future__ import annotations
 
@@ -33,5 +33,4 @@ class TTLCache:
             self._store[key] = (value, time.monotonic() + ttl_seconds)
 
 
-# Shared across all ApiFootballClient instances in this process.
 api_football_cache = TTLCache()

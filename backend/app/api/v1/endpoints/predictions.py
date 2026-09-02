@@ -32,7 +32,7 @@ def _parse_created_at(value: str) -> datetime:
 async def prediction_history(
     user: ClerkUser = Depends(get_current_clerk_user),
 ):
-    """Return the signed-in user's 10 most recent predictions."""
+    """Last 10 predictions for the signed-in user."""
     rows = await prediction_store.list_recent(user.user_id)
     return [
         PredictionHistoryItem(

@@ -27,8 +27,7 @@ class SportsAPIRateLimitError(ExternalAPIError):
     def __init__(
         self,
         message: str = (
-            "Sports data is temporarily rate-limited. "
-            "Please wait about a minute and try again with Last N set to 5 or fewer."
+            "API rate limit hit — wait about a minute and keep Last N at 5 or fewer."
         ),
     ):
         super().__init__(message, rate_limited=True)
@@ -42,6 +41,6 @@ class LLMError(AppError):
 class SubscriptionRequiredError(AppError):
     def __init__(
         self,
-        message: str = "Active subscription required. Please subscribe to continue.",
+        message: str = "Subscribe to run analyses.",
     ):
         super().__init__(message, status_code=402)

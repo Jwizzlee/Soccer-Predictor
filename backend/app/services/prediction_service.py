@@ -11,9 +11,8 @@ from app.services.sports.soccer.provider import SoccerStatsProvider
 from app.services.stats_aggregator import compute_supporting_stats
 
 RATE_LIMIT_USER_MESSAGE = (
-    "Sports data is temporarily rate-limited (10 requests/min on the free plan). "
-    "Please wait about a minute, avoid searching players right before analyzing, "
-    "and keep Last N games at 5 or fewer."
+    "API-Football rate limit hit (10/min on the free plan). "
+    "Wait a minute, then try again with Last N at 5 or fewer."
 )
 
 
@@ -47,15 +46,13 @@ class PredictionService:
                 raise InsufficientDataError(RATE_LIMIT_USER_MESSAGE)
             if stats_result.rate_limited and len(match_stats) < 3:
                 raise InsufficientDataError(
-                    f"Only {len(match_stats)} recent game(s) could be loaded before "
-                    "the API rate limit was reached. "
+                    f"Only {len(match_stats)} game(s) loaded before the rate limit. "
                     f"{RATE_LIMIT_USER_MESSAGE}"
                 )
             if stats_result.rate_limited and len(match_stats) < stats_result.requested_games:
                 sample_note = (
-                    f"Note: requested {stats_result.requested_games} games but only "
-                    f"{len(match_stats)} were available before the API per-minute rate "
-                    "limit was hit. Weight conclusions accordingly."
+                    f"Requested {stats_result.requested_games} games but only got "
+                    f"{len(match_stats)} before the rate limit."
                 )
         else:
             match_stats = await provider.get_player_recent_stats(

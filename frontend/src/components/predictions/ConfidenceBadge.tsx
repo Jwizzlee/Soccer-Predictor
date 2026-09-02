@@ -1,7 +1,6 @@
 import {
   confidenceTier,
   formatConfidence,
-  formatConfidencePercent,
   tierBarFill,
   tierBorderBg,
 } from "../../lib/formatters";
@@ -25,7 +24,7 @@ export default function ConfidenceBadge({ value }: ConfidenceBadgeProps) {
       <div className="max-w-xs">
         <div className="mb-1 flex justify-between text-[10px] font-medium uppercase tracking-wider text-slate-500">
           <span>Confidence meter</span>
-          <span>{formatConfidencePercent(pct)}</span>
+          <span>{pct}%</span>
         </div>
         <div className="h-2 overflow-hidden rounded-full bg-white/10">
           <div

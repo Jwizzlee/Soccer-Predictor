@@ -37,9 +37,7 @@ export default function RecentPicks({
           <h2 className="font-display text-lg font-semibold text-white">
             Recent picks
           </h2>
-          <p className="section-subtitle">
-            Click a pick to reload player &amp; prop settings
-          </p>
+          <p className="section-subtitle">Click a row to reload that pick</p>
         </div>
         <span className="text-sm text-slate-500">{expanded ? "−" : "+"}</span>
       </button>

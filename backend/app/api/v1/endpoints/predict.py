@@ -18,18 +18,15 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-def _hit_rate_percent(supporting) -> float:
-    if supporting.last_n <= 0:
-        return 0.0
-    return round((supporting.over_count / supporting.last_n) * 100, 1)
-
-
 async def _save_prediction_history(
     user: ClerkUser,
     result: PredictionResponse,
     request: PredictionRequest,
 ) -> None:
     stats = result.supporting_stats
+    hit_rate = (
+        round((stats.over_count / stats.last_n) * 100, 1) if stats.last_n else 0.0
+    )
     await prediction_store.insert_prediction(
         clerk_user_id=user.user_id,
         player_id=result.player_id,
@@ -40,7 +37,7 @@ async def _save_prediction_history(
         line=result.line,
         recommendation=result.recommendation.value,
         confidence=round(result.confidence * 100),
-        hit_rate=_hit_rate_percent(stats),
+        hit_rate=hit_rate,
     )
 
 
@@ -50,22 +47,7 @@ async def predict(
     user: ClerkUser = Depends(require_active_subscription),
     service: PredictionService = Depends(get_prediction_service),
 ):
-    """
-    Generate an Over/Under recommendation for a player prop.
-
-    **Mock mode** (`USE_MOCK_SPORTS_DATA=true`, default): use player IDs
-    `1001`–`1004` (Haaland, Vinícius, Salah, Lewandowski).
-
-    Example:
-    ```json
-    {
-      "player_id": 1001,
-      "prop_type": "shots_on_target",
-      "line": 1.5,
-      "last_n_games": 5
-    }
-    ```
-    """
+    """Over/Under recommendation for a player prop. Mock IDs: 1001–1004 when USE_MOCK_SPORTS_DATA=true."""
     init_sports_registry()
     try:
         result = await service.create_prediction(body)
@@ -89,7 +71,6 @@ async def predict(
 
 @router.get("/info")
 async def predict_info():
-    """Hints for testing the predict endpoint locally."""
     settings = get_settings()
     return {
         "endpoint": "POST /api/v1/predict",
